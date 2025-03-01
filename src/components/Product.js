@@ -10,7 +10,6 @@ function Products({ product }) {
         <Card.Img src={product.image} />{" "}
       </Link>{" "}
       <Card.Body>
-        {console.log(product)}{" "}
         <Link to={`/product/${product.id}`}>
           {" "}
           <Card.Title as="div">
