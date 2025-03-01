@@ -48,51 +48,34 @@ import React, { useEffect, useState } from 'react';
 import {useParams, Link} from 'react-router-dom';  // Import useParams
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
-
+import Loader from '../components/loader';
+import Message from '../components/message';
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
+import   {listProducts} from '../actions/productActions'
+import { productDetail } from '../actions/productActions'
 
 
 function ProductScreen() {
   const { id } = useParams();
-  const [product, setProduct] = useState({})
+  const dispatch = useDispatch()
+  const productDetails = useSelector(state => state.productDetails)
+  const {error, loading, product} = productDetails
 
     useEffect(()=> {
-      async function fetchProducts() {
+      dispatch(productDetail(id))
 
-        try {
-          const { data } = await axios.get(`http://127.0.0.1:8000/api/products/${id}`);
-          setProduct(data)
-        } catch (error) {
-          console.error('Error fetching products:', error)
-        }
-      }
+      
+    }, [dispatch]); // Re-fetch when ID changes
 
-      fetchProducts()
-    }, [id]); // Re-fetch when ID changes
-
-    if (!product || Object.keys(product).length === 0) {
-      return <h2>Loading...</h2>;
-    }
   
     return (
 
-  //   },[id])
-  // // const { id } = useParams(); // Get product ID from URL
-  // // console.log("URL Parameter ID:", id); // Debug: See what ID is received
-  // // console.log("Products List:", products); // Debug: Check if products exist
-
-  // // Ensure matching _id is the same type (number or string)
-  // const product = products.find((p) => p._id === match.params.id);
-  
-  // if (!product) {
-  //   console.log("Product Not Found");
-  //   return <h2>Product not found</h2>;
-  // }
-  // const product = products.find((p) => p._id === match.params.id)
-  // return (
     <div>
-      <Link to='/' className='btn btn-light my-3'>Go Back</Link>
-      <Row>
+        <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+        {loading ? <Loader />
+            : error ? <Message variant='danger'>{error}</Message>
+            : (<Row>
         <Col md={6}>
           <Image src={product.image} alt={product.name} fluid />
         </Col>
@@ -139,6 +122,9 @@ function ProductScreen() {
         </Card>
         </Col>
       </Row>
+            )
+          
+        }
     </div>
   );
 }

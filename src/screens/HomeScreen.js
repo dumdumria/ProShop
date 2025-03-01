@@ -1,31 +1,29 @@
 import React, {useState, useEffect} from 'react'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
+import   {listProducts} from '../actions/productActions'
+import { useDispatch, useSelector } from 'react-redux'
+import Loader  from '../components/loader'
+import Message from '../components/message'
 
-import axios from 'axios'
 
 function HomeScreen() {
-  const [products, setProducts] = useState([])
+  const dispatch = useDispatch()
+  const productList = useSelector(state => state.productList)
+  const {error, loading, products} = productList
 
     useEffect(()=> {
-      async function fetchProducts() {
+      dispatch(listProducts())
 
-        try {
-          const { data } = await axios.get('http://127.0.0.1:8000/api/products/')
-          console.log(data)
-          setProducts(data)
-        } catch (error) {
-          console.error('Error fetching products:', error)
-        }
-      }
-
-      fetchProducts()
-
-    },[])
+    },[dispatch])
+    
     return (
       <div>
           <h1>Latest Products</h1>
-          <Row>
+          {loading ? <Loader />
+            : error ? <Message variant='danger'>{error}</Message>
+            : <Row>
+            {console.log("Redux Store - Products:", products)}
             {products && products.length > 0 ?(
             products.map((product) => (
                 <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
@@ -38,7 +36,7 @@ function HomeScreen() {
            }
           
           
-        </Row>
+        </Row>}
       
     </div>
   )
