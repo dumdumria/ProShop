@@ -18,7 +18,6 @@ export const listProducts = () => async(dispatch)  =>{
 }
 
 export const productDetail = (id) => async(dispatch)  =>{
-    console.log("Action: listDetailcalled", id); 
     try{
         dispatch({type: PRODUCT_DETAIL_REQUEST})
         const { data } = await axios.get(`http://127.0.0.1:8000/api/products/${id}`)
