@@ -23,7 +23,6 @@ function HomeScreen() {
           {loading ? <Loader />
             : error ? <Message variant='danger'>{error}</Message>
             : <Row>
-            {console.log("Redux Store - Products:", products)}
             {products && products.length > 0 ?(
             products.map((product) => (
                 <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
