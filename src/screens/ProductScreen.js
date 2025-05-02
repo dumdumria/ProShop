@@ -51,24 +51,29 @@ import Rating from '../components/Rating';
 import Loader from '../components/loader';
 import Message from '../components/message';
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios';
-import { listProducts } from '../actions/productActions'
-import { productDetail } from '../actions/productActions'
+// import axios from 'axios';
+// import { listProducts } from '../actions/productActions'
+import { listProductDetails } from '../actions/productActions'
 
 
-function ProductScreen({match, history}) {
+function ProductScreen({}) {
+
   const { id } = useParams();
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const productDetails = useSelector(state => state.productDetails)
   const { error, loading, product } = productDetails
   const [qty, setQty] = useState(1)
 
+
+  
+
   useEffect(() => {
-    dispatch(productDetail(id))
+    dispatch(listProductDetails(id))
 
 
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`)
