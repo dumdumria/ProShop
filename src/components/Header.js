@@ -38,6 +38,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout} from '../actions/userActions'
+import SearchBox from './SearchBox'
 
 function Header() {
 
@@ -57,7 +58,9 @@ function Header() {
         <Container>
           {/* Use Link instead of LinkContainer */}
           <Navbar.Brand as={Link} to="/">ProShop</Navbar.Brand>
+          
 
+          <SearchBox/>
           <Nav className="mr-auto">
             {/* Use Nav.Link as={Link} directly */}
             <Nav.Link as={Link} to="/cart">
