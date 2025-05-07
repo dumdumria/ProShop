@@ -24,7 +24,7 @@ function ProductCarousel() {
     <Carousel pause='hover' className='bg-dark'>
         {products.map(product => (
             <Carousel.Item key={product.id}>
-                <Link to={`/products/${product.id}`}>
+                <Link to={`/product/${product.id}`}>
                     <Image src={product.image} alt={product.name} fluid/>
                     <Carousel.Caption className='carousel.caption'>
                         <h4>{product.name} (${product.price})</h4>

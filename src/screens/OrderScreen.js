@@ -113,7 +113,7 @@ function OrderScreen() {
         }
     
         const shouldFetchOrder =
-            !order || order.id !== orderId || successPay || successDeliver
+            !order || Number(order.id) != Number(orderId) || successPay || successDeliver
     
         if (successPay) {
             dispatch({ type: ORDER_PAY_RESET })
