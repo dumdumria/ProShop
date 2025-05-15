@@ -11,7 +11,7 @@ function ProductCarousel() {
     const dispatch = useDispatch()
 
     const productTopRated = useSelector(state => state.productTopRated)
-    const {error, loading, products} = productTopRated
+    const {error, loading, products = []} = productTopRated
 
     useEffect(() => {
         dispatch(listTopProducts())
